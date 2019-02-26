@@ -1,0 +1,21 @@
+{
+  "presets": ["react-app"],
+  "plugins": [
+    [
+      "babel-plugin-module-resolver",
+      {
+        "root": ["./"],
+        "alias": {
+          "@assets": "./src/assets/",
+          "@components": "./src/components/",
+          "@containers": "./src/containers/",
+          "@utils": "./src/utils/",
+          "@stores": "./src/stores/",
+          "@services": "./src/services/",
+          "@i18n": "./src/i18n/",
+          "@routes": "./src/routes/"
+        }
+      }
+    ]
+  ]
+}
