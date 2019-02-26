@@ -17,10 +17,61 @@ code {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-direction: column;
   border-radius: 10px;
   background-color: #555;
   padding: 10px;
   color: #fff;
   font-family: Fira Code;
   font-weight: 500;
+}
+button {
+  border-radius: 7.5px;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  outline: none;
+  line-height: 20px;
+  font-size: 20px;
+  color: green;
+}
+
+ul.list {
+  list-style-type: none;
+  width: 900px;
+  margin: 0 auto;
+}
+.form-field {
+  width: 90%;
+  margin: 0 auto;
+  input {
+    outline: none;
+    border: 0;
+    width: 900px;
+    padding: 5px 7.5px;
+    font-size: 24px;
+    border-radius: 7.5px;
+    color: #fff;
+    background-color: #990;
+    &::placeholder {
+      font-size: 20px;
+    }
+  }
+}
+.todo {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  border-radius: 10px;
+  background-color: #990;
+  box-shadow: #990;
+  margin-bottom: 10px;
+  input.check {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+  }
 }
