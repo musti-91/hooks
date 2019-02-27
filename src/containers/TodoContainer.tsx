@@ -1,12 +1,14 @@
 import React, { SFC, useState } from 'react'
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
+import { getRandomId } from '@utils/getRandomId'
 
 interface iOwnProps {
   name?: string
 }
 
 interface ITodo {
+  id: string
   subject: string
   complete: boolean
 }
@@ -16,43 +18,48 @@ interface ITodo {
  **/
 
 const TodoContainer: SFC<iOwnProps> = ({ name }) => {
-  const [todos, setTodo] = useState<ITodo[]>([{ subject: 'initial_todo', complete: true }])
+  const [todos, setTodo] = useState<ITodo[]>([
+    { id: getRandomId(4, true), subject: 'initial_todo', complete: true }
+  ])
 
   const setList = (subject: string) => {
-    let copyTodos: ITodo[] = [...todos, { subject, complete: false }]
+    let copyTodos: ITodo[] = [...todos, { id: getRandomId(5, true), subject, complete: false }]
     setTodo(copyTodos)
   }
 
-  const setTodoCheck = (i: number) => {
+  const setTodoCheck = (id: string) => {
     const copyTodos: ITodo[] = [...todos]
-    todos[i].complete = !copyTodos[i].complete
+    let index = copyTodos.findIndex((todo: ITodo) => todo.id === id)
+    copyTodos[index].complete = !todos[index].complete
     setTodo(copyTodos)
+    console.log(
+      `%cchecked Todo: (${todos[index].id})`,
+      'color:green;background-color:lightblue;padding:10px;border-radius:10px'
+    )
   }
 
-  const removeTodo = (i: number) => {
+  const removeTodo = (id: string) => {
     const copyTodos: ITodo[] = [...todos]
-    copyTodos.splice(i, 1)
+    let index = copyTodos.findIndex(todo => todo.id === id)
+    copyTodos.splice(index, 1)
     setTodo(copyTodos)
+    console.log(
+      `%cremoved index: ${index}`,
+      'color:red;background-color:lightblue;padding:10px;border-radius:10px'
+    )
   }
 
   return (
-    <div>
+    <div className='todo-container'>
       <h4>{name}</h4>
       <AddTodo onGetValue={setList} />
-      <div>
-        <ul className='list'>
-          {todos.length !== 0 && <h2>TODOS</h2>}
-          {todos.length !== 0 &&
-            todos.map((todo: ITodo, index: number) => (
-              <ListItem
-                item={todo}
-                indexItem={index}
-                onDelete={removeTodo}
-                onChecked={setTodoCheck}
-              />
-            ))}
-        </ul>
-      </div>
+      <ul className='list'>
+        {todos.length !== 0 && <h2>TODOS</h2>}
+        {todos.length !== 0 &&
+          todos.map((todo: ITodo, index: number) => (
+            <ListItem item={todo} onDelete={removeTodo} onChecked={setTodoCheck} key={todo.id} />
+          ))}
+      </ul>
     </div>
   )
 }

@@ -23,7 +23,8 @@
       "@stores/*": ["src/stores/*"],
       "@utils/*": ["src/utils/*"],
       "@i18n/*": ["src/i18n/*"],
-      "@routes/*": ["src/routes/*"]
+      "@routes/*": ["src/routes/*"],
+      "@test/*": ["src/test/*"]
     }
   },
   "include": ["src"]

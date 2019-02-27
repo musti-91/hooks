@@ -11,7 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 .container {
-  width: 1400px;
+  max-width: 800px;
+  width: 700px;
   margin: 0 auto;
   margin-top: 20px;
   display: flex;
@@ -19,8 +20,8 @@ code {
   align-items: flex-start;
   flex-direction: column;
   border-radius: 10px;
-  background-color: #555;
-  padding: 10px;
+  padding: 3px 5px;
+  border: 2px solid cornflowerblue;
   color: #fff;
   font-family: Fira Code;
   font-weight: 500;
@@ -33,45 +34,57 @@ button {
   outline: none;
   line-height: 20px;
   font-size: 20px;
-  color: green;
+  color: crimson;
 }
 
-ul.list {
-  list-style-type: none;
-  width: 900px;
-  margin: 0 auto;
-}
 .form-field {
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
+  padding-left: 40px;
   input {
     outline: none;
     border: 0;
-    width: 900px;
+    border: 1px solid cornflowerblue;
+    width: 90%;
     padding: 5px 7.5px;
     font-size: 24px;
     border-radius: 7.5px;
-    color: #fff;
-    background-color: #990;
+    color: coral;
     &::placeholder {
       font-size: 20px;
     }
   }
 }
-.todo {
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
+
+.todo-container {
   width: 100%;
-  border-radius: 10px;
-  background-color: #990;
-  box-shadow: #990;
-  margin-bottom: 10px;
-  input.check {
-    width: 30px;
-    height: 30px;
-    border-radius: 10px;
+  padding: 0px;
+  .list {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    list-style-type: none;
+    .todo {
+      border: 1px solid cornflowerblue;
+      color: cornflowerblue;
+      width: 90%;
+      display: flex;
+      padding: 0 8px;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      p {
+        font-size: 30px;
+      }
+      input.check {
+        width: 30px;
+        height: 30px;
+        border-radius: 10px;
+        color: cornflowerblue;
+        background-color: crimson;
+      }
+    }
   }
 }

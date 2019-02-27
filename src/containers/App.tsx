@@ -5,7 +5,7 @@ const App = () => {
   return (
     <div className='container'>
       <h2>Hooks</h2>
-      <TodoContainer />
+      <TodoContainer name='TodoContainer' />
     </div>
   )
 }
