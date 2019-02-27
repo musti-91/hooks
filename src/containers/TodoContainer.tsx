@@ -1,8 +1,9 @@
 import React, { SFC, useState, useEffect } from 'react'
+import _ from 'lodash'
 import iTodo from '@models/iTodo'
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
-import { getRandomId } from '@utils/getRandomId'
+import fetchData from '@utils/fetchData'
 import { log } from '@utils/log'
 
 interface iOwnProps {
@@ -19,11 +20,15 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   const [fetchError, setFetchTodoError] = useState<any>(null)
 
   const addTodo = (title: string) => {
-    let copyTodos: iTodo[] = [
-      { id: getRandomId(5, true), title, completed: false, userId: 1 },
-      ...todos
-    ]
+    let newTodo: iTodo = {
+      id: (todos.length + 1).toString(),
+      title,
+      completed: false,
+      userId: 1
+    }
+    let copyTodos: iTodo[] = [newTodo, ...todos]
     setTodos(copyTodos)
+    log(`add Todo: ${newTodo.id}`)
   }
 
   const setTodoCheck = (id: string) => {
@@ -46,25 +51,14 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     const copyTodos: iTodo[] = [...todos]
     let index = copyTodos.findIndex(todo => todo.id == id)
     let userId = copyTodos[index].userId
-    let fetchUser = getFetchData(userId)
+    let fetchUser = fetchData('user', userId)
     fetchUser.then(user => setUser(user))
   }
 
-  const getFetchData = async (id?: string | number) => {
-    let req
-    if (id) {
-      req = await fetch(`http://jsonplaceholder.typicode.com/users/${id}`)
-    } else {
-      req = await fetch('http://localhost:3030/todos')
-    }
-    return req.json()
-  }
-
   useEffect(() => {
-    fetch('http://localhost:3030/todos')
-      .then(req => req.json())
-      .then(res => setTodos(res))
-      .catch(error => setFetchTodoError(error))
+    fetchData('todos')
+      .then(todos => setTodos(_.shuffle(todos))) // length= 200 😳
+      .catch(err => setFetchTodoError(err))
   }, [])
 
   return (
@@ -72,7 +66,6 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
       <h4>{name}</h4>
       <AddTodo onGetValue={addTodo} />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
-      {user && <h2>{user.name}</h2>}
       <ul className='list'>
         {todos.length !== 0 && <h2>TODOS</h2>}
         {todos.length !== 0 &&
@@ -83,6 +76,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
               onChecked={setTodoCheck}
               key={todo.id}
               onUserIdClick={setUserId}
+              user={user}
             />
           ))}
       </ul>

@@ -26,7 +26,7 @@ const AddTodo: SFC<iOwnProps> = ({ onGetValue }) => {
       <input
         onChange={(value: EVENT) => setVal(value.currentTarget.value)}
         value={val}
-        placeholder='todo'
+        placeholder='Describe your todo here ....'
       />
     </form>
   )
