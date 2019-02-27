@@ -22,7 +22,7 @@ code {
   border-radius: 10px;
   padding: 3px 5px;
   border: 2px solid cornflowerblue;
-  color: #fff;
+  color: cornflowerblue;
   font-family: Fira Code;
   font-weight: 500;
 }
@@ -67,6 +67,8 @@ button {
     .todo {
       border: 1px solid cornflowerblue;
       color: cornflowerblue;
+      align-self: flex-start;
+      height: 100px;
       width: 90%;
       display: flex;
       padding: 0 8px;
@@ -74,9 +76,13 @@ button {
       align-items: center;
       flex-direction: row;
       border-radius: 10px;
-      margin-bottom: 10px;
-      p {
-        font-size: 30px;
+      .title {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+        .user-Id {
+          color: red;
+        }
       }
       input.check {
         width: 30px;

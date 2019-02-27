@@ -6,6 +6,7 @@
     "start": "node scripts/start.js",
     "build": "rm -rf build && node scripts/build.js && npx serve -s build",
     "test": "jest --coverage",
+    "server": "json-server db.json --port 3030",
     "test:w": "node scripts/test.js",
     "precommit": "npm run test",
     "prepush": "npm run test"
@@ -59,6 +60,7 @@
     "react-app-polyfill": "^0.2.1",
     "react-dev-utils": "^7.0.3",
     "react-dom": "^16.8.3",
+    "react-spring": "^8.0.8",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.1",
@@ -84,6 +86,7 @@
     "babel-plugin-module-resolver": "^3.2.0",
     "husky": "^1.3.1",
     "jest-enzyme": "^7.0.1",
+    "json-server": "^0.14.2",
     "node-sass": "^4.11.0",
     "react-test-renderer": "^16.8.3",
     "ts-jest": "^24.0.0",

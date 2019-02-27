@@ -1,10 +1,11 @@
 import React, { SFC } from 'react'
-
+import { useSpring, animated } from 'react-spring'
 interface iOwnProps {
   key: any
   item: any
-  onDelete(index: string): void
-  onChecked(index: string): void
+  onDelete(id: string): void
+  onChecked(id: string): void
+  onUserIdClick(id: string): void
   error?: any
 }
 
@@ -13,20 +14,31 @@ interface iOwnProps {
  * @function @ListItem
  **/
 
-const ListItem: SFC<iOwnProps> = ({ onChecked, error, item, onDelete }) => {
+const ListItem: SFC<iOwnProps> = ({ onChecked, error, item, onDelete, onUserIdClick }) => {
+  const styles = useSpring({
+    transform: 'translateY(50%)',
+    marginBottom: 30,
+    opacity: 1,
+    from: { transform: 'translateY(0%)', opacity: 0, marginBottom: 0 }
+  })
   return (
-    <li className='todo'>
+    <animated.div className='todo' style={styles}>
       <input
         type='radio'
         onChange={() => onChecked(item.id)}
-        checked={item.complete}
+        checked={item.completed}
         className='check'
       />
-      <p style={{ textDecoration: item.complete ? 'line-through' : '' }}>
-        {!error && item.subject}
-      </p>
+      <div className='title'>
+        <h3 style={{ textDecoration: item.completed ? 'line-through' : '' }}>
+          {!error && item.title}
+        </h3>
+        <p className='user-Id' onClick={() => onUserIdClick(item.id)}>
+          user: {item.userId}
+        </p>
+      </div>
       <button onClick={() => onDelete(item.id)}>X</button>
-    </li>
+    </animated.div>
   )
 }
 

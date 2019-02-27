@@ -14,7 +14,8 @@
           "@services": "./src/services/",
           "@i18n": "./src/i18n/",
           "@routes": "./src/routes/",
-          "@test": "./src/test/"
+          "@test": "./src/test/",
+          "@models": "./src/models/"
         }
       }
     ]
