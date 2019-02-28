@@ -1,10 +1,15 @@
-import React, { SFC, useState, useEffect } from 'react'
+import React, { SFC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import _ from 'lodash'
+// helpers
+import { log } from '@utils/log'
+import fetchData from '@utils/fetchData'
+// models
 import iTodo from '@models/iTodo'
+import iUser from '@models/iUser'
+// components
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
-import fetchData from '@utils/fetchData'
-import { log } from '@utils/log'
+import { array } from 'prop-types'
 
 interface iOwnProps {
   name?: string
@@ -16,6 +21,8 @@ interface iOwnProps {
 
 const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   const [todos, setTodos] = useState<iTodo[]>([])
+  const [users, setUsers] = useFetchData<iUser[]>('users')
+
   const [user, setUser] = useState<any>({})
   const [fetchError, setFetchTodoError] = useState<any>(null)
 
@@ -52,18 +59,22 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     let index = copyTodos.findIndex(todo => todo.id == id)
     let userId = copyTodos[index].userId
     let fetchUser = fetchData('user', userId)
-    fetchUser.then(user => setUser(user))
+    fetchUser.then(user => {
+      setUser(user)
+      setUsers([...users, user])
+    })
+    console.log(users)
   }
 
   useEffect(() => {
     fetchData('todos')
-      .then(todos => setTodos(_.shuffle(todos))) // length= 200 😳
+      .then(todos => setTodos(_.shuffle(todos)))
       .catch(err => setFetchTodoError(err))
   }, [])
 
   return (
     <div className='todo-container'>
-      <h4>{name}</h4>
+      <h2>{name}</h2>
       <AddTodo onGetValue={addTodo} />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
@@ -82,6 +93,16 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
       </ul>
     </div>
   )
+}
+
+function useFetchData<S>(type: string): [S | any[], Dispatch<SetStateAction<S[]>>] {
+  const [arr, setArr] = useState<S[]>([])
+
+  useEffect(() => {
+    fetchData(type).then(res => setArr(res))
+  }, [])
+
+  return [arr, setArr]
 }
 
 export default TodoContainer
