@@ -1,4 +1,4 @@
-import React, { SFC, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import React, { SFC, useState, useEffect } from 'react'
 import _ from 'lodash'
 // helpers
 import { log } from '@utils/log'
@@ -9,7 +9,7 @@ import iUser from '@models/iUser'
 // components
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
-import { array } from 'prop-types'
+import { getNotified } from '@utils/notifications'
 
 interface iOwnProps {
   name?: string
@@ -20,11 +20,12 @@ interface iOwnProps {
  **/
 
 const TodoContainer: SFC<iOwnProps> = ({ name }) => {
-  const [todos, setTodos] = useState<iTodo[]>([])
-  const [users, setUsers] = useFetchData<iUser[]>('users')
+  // custom hooks
+  const { todos, setTodos, fetchError } = useFetchData<iTodo[]>('todos')
+  const { users, setUsers } = useFetchData<iUser[]>('users')
 
   const [user, setUser] = useState<any>({})
-  const [fetchError, setFetchTodoError] = useState<any>(null)
+  // const [fetchError, setFetchTodoError] = useState<any>(null)
 
   const addTodo = (title: string) => {
     let newTodo: iTodo = {
@@ -33,13 +34,14 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
       completed: false,
       userId: 1
     }
-    let copyTodos: iTodo[] = [newTodo, ...todos]
+
+    let copyTodos = [newTodo, ...todos]
     setTodos(copyTodos)
     log(`add Todo: ${newTodo.id}`)
   }
 
   const setTodoCheck = (id: string) => {
-    const copyTodos: iTodo[] = [...todos]
+    const copyTodos = [...todos]
     let index = copyTodos.findIndex((todo: iTodo) => todo.id === id)
     copyTodos[index].completed = !todos[index].completed
     setTodos(copyTodos)
@@ -47,7 +49,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   }
 
   const removeTodo = (id: string) => {
-    const copyTodos: iTodo[] = [...todos]
+    const copyTodos = [...todos]
     let index = copyTodos.findIndex(todo => todo.id === id)
     copyTodos.splice(index, 1)
     setTodos(copyTodos)
@@ -55,22 +57,16 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   }
 
   const setUserId = (id: string) => {
-    const copyTodos: iTodo[] = [...todos]
+    const copyTodos = [...todos]
     let index = copyTodos.findIndex(todo => todo.id == id)
     let userId = copyTodos[index].userId
     let fetchUser = fetchData('user', userId)
     fetchUser.then(user => {
       setUser(user)
       setUsers([...users, user])
+      getNotified(user.name)
     })
-    console.log(users)
   }
-
-  useEffect(() => {
-    fetchData('todos')
-      .then(todos => setTodos(_.shuffle(todos)))
-      .catch(err => setFetchTodoError(err))
-  }, [])
 
   return (
     <div className='todo-container'>
@@ -95,14 +91,33 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   )
 }
 
-function useFetchData<S>(type: string): [S | any[], Dispatch<SetStateAction<S[]>>] {
-  const [arr, setArr] = useState<S[]>([])
+/**
+ * @type custom hooks
+ * @param type string
+ * @return type object {[], setArray()}
+ */
+function useFetchData<S>(type: string) {
+  const [arr, setArr] = useState<any[]>([])
+  const [fetchError, setFetchTodoError] = useState(null)
 
   useEffect(() => {
     fetchData(type).then(res => setArr(res))
   }, [])
 
-  return [arr, setArr]
+  useEffect(() => {
+    fetchData('todos')
+      .then(todos => setArr(_.shuffle(todos)))
+      .catch(err => setFetchTodoError(err))
+  }, [])
+
+  switch (type) {
+    case 'users':
+      return { users: arr, setUsers: setArr, fetchError }
+    case 'todos':
+      return { todos: arr, setTodos: setArr, fetchError }
+    default:
+      return { arr, setArr, fetchError }
+  }
 }
 
 export default TodoContainer
