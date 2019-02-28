@@ -6,7 +6,6 @@
     "start": "node scripts/start.js",
     "build": "rm -rf build && node scripts/build.js && npx serve -s build",
     "test": "jest --coverage",
-    "server": "json-server db.json --port 3030",
     "test:w": "node scripts/test.js",
     "precommit": "npm run test",
     "prepush": "npm run test"
