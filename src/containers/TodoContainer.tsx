@@ -10,6 +10,7 @@ import iUser from '@models/iUser'
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
 import { getNotified } from '@utils/notifications'
+import UserContainer from './UserContainer'
 
 interface iOwnProps {
   name?: string
@@ -72,6 +73,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     <div className='todo-container'>
       <h2>{name}</h2>
       <AddTodo onGetValue={addTodo} />
+      <UserContainer />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
         {todos.length !== 0 && <h2>TODOS</h2>}
