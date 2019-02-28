@@ -4,7 +4,7 @@ interface iOwnProps {
   onGetValue(val: string): void
 }
 
-type EVENT = FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
+type E = FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
 /**
  * @author
  * @function @AddTodo
@@ -13,7 +13,7 @@ type EVENT = FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
 const AddTodo: SFC<iOwnProps> = ({ onGetValue }) => {
   const [val, setVal] = useState<string>('')
 
-  const getValue = (e: EVENT) => {
+  const getValue = (e: E) => {
     e.preventDefault()
     if (val.trim() !== '' && val.length >= 3) {
       onGetValue(val)
@@ -24,7 +24,7 @@ const AddTodo: SFC<iOwnProps> = ({ onGetValue }) => {
   return (
     <form onSubmit={getValue} className='form-field'>
       <input
-        onChange={(value: EVENT) => setVal(value.currentTarget.value)}
+        onChange={(value: E) => setVal(value.currentTarget.value)}
         value={val}
         placeholder='Describe your todo here ....'
       />
