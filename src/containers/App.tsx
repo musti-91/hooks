@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useReducer } from 'react'
 import TodoContainer from '@containers/TodoContainer'
+import UserContainer from './UserContainer'
 
 const App = () => {
   const [width, setWidth] = useState(window.innerWidth)
@@ -14,6 +15,7 @@ const App = () => {
 
   return (
     <div className='container'>
+      <UserContainer />
       <h2>Hooks</h2>
       <p>initial width: {width}px</p>
       <TodoContainer name='TodoContainer' />

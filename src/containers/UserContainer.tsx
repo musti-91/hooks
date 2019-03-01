@@ -1,6 +1,6 @@
-import React, { SFC, useReducer, useEffect, createContext } from 'react'
-import { reducer as userReducer, logger, createStore, INITIAL_STATE } from '@stores/index'
-import fetchData from '@utils/fetchData'
+import React, { SFC, useReducer, MouseEvent } from 'react'
+import { userReducer, INITIAL_STATE, Store, createStore } from '@stores/index'
+type E = MouseEvent<HTMLButtonElement>
 
 interface iOwnProps {}
 
@@ -9,26 +9,24 @@ interface iOwnProps {}
  * @function @UserContainer
  **/
 
-const Store = createContext(INITIAL_STATE)
-
 const UserContainer: SFC<iOwnProps> = props => {
-  const store = createStore([logger])
-
-  useEffect(() => {
-    fetchData('users').then(users => {
-      store.dispatch({ type: 'START_FETCHING' })
-      store.dispatch({ type: 'FETCH_FULFILLED', users })
-    })
-  }, [])
+  const [state, dispatch] = useReducer(userReducer, INITIAL_STATE)
 
   return (
-    <Store.Provider value={store.state}>
-      <div>
-        {store.state.users.length === 0 && <p>Loading...</p>}
-        {store.state.users.length !== 0 &&
-          store.state.users.map((user: any) => <li key={user.id}>{user.name}</li>)}
-      </div>
+    <Store.Provider value={state}>
+      <>
+        <Consumer />
+        <button onClick={(e: E) => dispatch({ type: 'INC' })}>+</button>
+        <button onClick={(e: E) => dispatch({ type: 'DEC' })}>-</button>
+        <button onClick={(e: E) => dispatch({ type: 'RESET' })}>*</button>
+      </>
     </Store.Provider>
+  )
+}
+
+export function Consumer(props: any) {
+  return (
+    <Store.Consumer>{({ theme, count }) => <div style={theme}>Count: {count}</div>}</Store.Consumer>
   )
 }
 

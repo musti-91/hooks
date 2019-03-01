@@ -10,7 +10,7 @@ import iUser from '@models/iUser'
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
 import { getNotified } from '@utils/notifications'
-import UserContainer from './UserContainer'
+import { array } from 'prop-types'
 
 interface iOwnProps {
   name?: string
@@ -21,12 +21,11 @@ interface iOwnProps {
  **/
 
 const TodoContainer: SFC<iOwnProps> = ({ name }) => {
+  const [user, setUser] = useState<any>({})
   // custom hooks
   const { todos, setTodos, fetchError } = useFetchData<iTodo[]>('todos')
   const { users, setUsers } = useFetchData<iUser[]>('users')
-
-  const [user, setUser] = useState<any>({})
-  // const [fetchError, setFetchTodoError] = useState<any>(null)
+  const completedTodos = useCounter<number>(todos)
 
   const addTodo = (title: string) => {
     let newTodo: iTodo = {
@@ -73,10 +72,11 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     <div className='todo-container'>
       <h2>{name}</h2>
       <AddTodo onGetValue={addTodo} />
-      <UserContainer />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
-        {todos.length !== 0 && <h2>TODOS</h2>}
+        {todos.length !== 0 && <h2>Total: {todos.length}</h2>}
+        {todos.length !== 0 && <h2>completed: {completedTodos}</h2>}
+        {todos.length !== 0 && <h2>un completed: {todos.length - completedTodos}</h2>}
         {todos.length !== 0 &&
           todos.map((todo: iTodo) => (
             <ListItem
@@ -121,5 +121,17 @@ function useFetchData<S>(type: string) {
       return { arr, setArr, fetchError }
   }
 }
-
+/**
+ *
+ * @param Array
+ */
+function useCounter<N>(array: any[]): number {
+  const [completedTodos, setCompletedTodos] = useState(0)
+  useEffect(() => {
+    let i: number = 0
+    array.map(item => (item.completed ? i++ : 0))
+    setCompletedTodos(i)
+  })
+  return completedTodos
+}
 export default TodoContainer
