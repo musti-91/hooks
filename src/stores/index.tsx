@@ -9,14 +9,12 @@ interface iState {
 
 const themes = {
   N: {
-    backgroundColor: 'red'
+    backgroundColor: 'coral'
   },
   DARK: {
-    foreground: '#000',
     backgroundColor: '#111'
   },
   LIGHT: {
-    foreground: '#FFF',
     backgroundColor: 'green'
   }
 }
@@ -34,7 +32,7 @@ interface Action {
 }
 
 const changeTheme = (element: any, theme: any) => {
-  return (element.style = theme)
+  return (element.style.backgroundColor = theme)
 }
 
 function reducer(state: iState, action: Action) {
@@ -42,33 +40,42 @@ function reducer(state: iState, action: Action) {
     case 'INC':
       return (state = {
         count: state.count + 1,
-        element: action.element && changeTheme(action.element, themes.DARK)
+        element: action.element ? changeTheme(action.element, 'coral') : 'not  specified '
       })
     case 'DEC':
       return (state = {
         count: state.count - 1,
-        element: action.element && changeTheme(action.element, themes.LIGHT)
+        element: action.element ? changeTheme(action.element, 'lightgreen') : 'not  specified '
       })
     case 'RESET':
       return (state = {
-        count: 0,
-        element: action.element && changeTheme(action.element, themes.N)
+        count: action.count ? action.count : 0,
+        element: action.element ? changeTheme(action.element, 'red') : 'not  specified '
       })
     default:
       return state
   }
 }
 
-const logger = (state: () => any) => (next: () => any) => (action: any) => {
-  log(action)
-  next()
-}
+// const logger = (state: () => any) => (next: () => any) => (action: any) => {
+//   log(action)
+//   next()
+// }
 
+const logger = (prev: iState, next: iState) => {
+  let timesOfChanges: number = 0
+  console.log(`%c> prevState: @${new Date().toLocaleTimeString()}`, 'color: #016BB7;')
+  console.log(prev)
+  console.count('changes')
+  console.log(`%c> next State: @${new Date().toLocaleTimeString()}`, 'color: #016BB7;')
+  console.log(next)
+  return timesOfChanges
+}
 function createStore<T>(reducer: any, init: iState | T) {
   const [state, dispatch] = useReducer(reducer, init)
   return { state, dispatch }
 }
 
-const Store = createContext(state)
+const Store = createContext(state, logger)
 
 export { reducer as userReducer, state as INITIAL_STATE, Store, createStore }

@@ -10,7 +10,6 @@ import iUser from '@models/iUser'
 import AddTodo from '@components/AddTodo'
 import ListItem from '@components/ListItem'
 import { getNotified } from '@utils/notifications'
-import { array } from 'prop-types'
 
 interface iOwnProps {
   name?: string

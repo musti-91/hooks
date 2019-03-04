@@ -1,4 +1,4 @@
-import React, { SFC, useReducer, MouseEvent } from 'react'
+import React, { SFC, useReducer, MouseEvent, useContext, useDebugValue, useEffect } from 'react'
 import { userReducer, INITIAL_STATE, Store, createStore } from '@stores/index'
 type E = MouseEvent<HTMLButtonElement>
 
@@ -11,6 +11,15 @@ interface iOwnProps {}
 
 const UserContainer: SFC<iOwnProps> = props => {
   const [state, dispatch] = useReducer(userReducer, INITIAL_STATE)
+
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem('count'))
+    dispatch({ type: 'RESET', count: data.count })
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('count', JSON.stringify(state))
+  }, [state])
 
   return (
     <Store.Provider value={state}>
@@ -25,8 +34,15 @@ const UserContainer: SFC<iOwnProps> = props => {
 }
 
 export function Consumer(props: any) {
+  const dispatch = useContext(Store)
   return (
-    <Store.Consumer>{({ theme, count }) => <div style={theme}>Count: {count}</div>}</Store.Consumer>
+    <Store.Consumer>
+      {({ count, theme }) => (
+        <div style={theme}>
+          <h3>Count: {count}</h3>
+        </div>
+      )}
+    </Store.Consumer>
   )
 }
 
