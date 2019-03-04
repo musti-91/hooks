@@ -7,12 +7,12 @@ import fetchData from '@utils/fetchData'
 import iTodo from '@models/iTodo'
 import iUser from '@models/iUser'
 // components
-import Form from '@components/Form'
+import Form from '@components/fields/Form'
 import ListItem from '@components/ListItem'
 import { getNotified } from '@utils/notifications'
 
 interface iOwnProps {
-  name?: string
+  name?: string | ''
 }
 /**
  * @author
@@ -26,19 +26,20 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   const { users, setUsers } = useFetchData<iUser[]>('users')
   const completedTodos = useCounter<number>(todos)
 
+  // Add
   const addTodo = (title: string) => {
     let newTodo: iTodo = {
       id: (todos.length + 1).toString(),
       title,
       completed: false,
-      userId: 1
+      userId: Math.floor(Math.random() * users.length)
     }
 
     let copyTodos = [newTodo, ...todos]
     setTodos(copyTodos)
     log(`add Todo: ${newTodo.id}`)
   }
-
+  // Check
   const setTodoCheck = (id: string) => {
     const copyTodos = [...todos]
     let index = copyTodos.findIndex((todo: iTodo) => todo.id === id)
@@ -46,7 +47,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     setTodos(copyTodos)
     log(`checked Todo:${index + 1}`)
   }
-
+  // Remove
   const removeTodo = (id: string) => {
     const copyTodos = [...todos]
     let index = copyTodos.findIndex(todo => todo.id === id)
@@ -54,7 +55,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     setTodos(copyTodos)
     log(`removed index: ${index + 1}`)
   }
-
+  // getUserId
   const setUserId = (id: string) => {
     const copyTodos = [...todos]
     let index = copyTodos.findIndex(todo => todo.id == id)
@@ -62,20 +63,27 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
     let fetchUser = fetchData('user', userId)
     fetchUser.then(user => {
       setUser(user)
-      setUsers([...users, user])
-      getNotified(user.name)
+      setUsers(users)
+      getNotified('new user added: ' + user.name)
     })
   }
 
+  const renderHeader = () => {
+    return (
+      <div>
+        {todos.length !== 0 && <h2>Total: {todos.length}</h2>}
+        {todos.length !== 0 && <h2>completed: {completedTodos}</h2>}
+        {todos.length !== 0 && <h2>uncompleted: {todos.length - completedTodos}</h2>}
+      </div>
+    )
+  }
   return (
     <div className='todo-container'>
       <h2>{name}</h2>
       <Form onGetValue={addTodo} />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
-        {todos.length !== 0 && <h2>Total: {todos.length}</h2>}
-        {todos.length !== 0 && <h2>completed: {completedTodos}</h2>}
-        {todos.length !== 0 && <h2>un completed: {todos.length - completedTodos}</h2>}
+        {renderHeader()}
         {todos.length !== 0 &&
           todos.map((todo: iTodo) => (
             <ListItem

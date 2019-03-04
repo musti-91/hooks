@@ -1,5 +1,4 @@
-import React, { createContext, useReducer, Reducer, Dispatch } from 'react'
-import { log } from '@utils/log'
+import { createContext, useReducer, useDebugValue } from 'react'
 
 interface iState {
   count: number
@@ -71,11 +70,14 @@ const logger = (prev: iState, next: iState) => {
   console.log(next)
   return timesOfChanges
 }
+
 function createStore<T>(reducer: any, init: iState | T) {
   const [state, dispatch] = useReducer(reducer, init)
   return { state, dispatch }
 }
 
+const date = new Date()
+useDebugValue(date, date => date.toISOString())
 const Store = createContext(state, logger)
 
 export { reducer as userReducer, state as INITIAL_STATE, Store, createStore }

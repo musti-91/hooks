@@ -1,6 +1,5 @@
 import React from 'react'
-import { mount, shallow, render } from 'enzyme'
-import renderer from 'react-test-renderer'
+import { mount, shallow } from 'enzyme'
 import App from '@containers/App'
 
 describe('App', () => {
@@ -8,7 +7,8 @@ describe('App', () => {
   it('should have Hooks text', () => {
     mount(<App />)
   })
-  it('should have .container as classname', () => {
-    expect(wrapper.hasClass('container')).toBe(true)
+  it('should have ```.spinner``` as classname', () => {
+    // high order component with class '.spinner'
+    expect(wrapper.hasClass('spinner')).toBe(true)
   })
 })

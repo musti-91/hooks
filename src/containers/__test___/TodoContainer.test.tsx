@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { shallow, mount } from 'enzyme'
 import TodoContainer from '@containers/TodoContainer'
-import Form from '@components/Form'
+import Form from '@components/fields/Form'
 import ListItem from '@components/ListItem'
 
 describe('TodoContainer', () => {

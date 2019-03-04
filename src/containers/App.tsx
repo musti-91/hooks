@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useReducer } from 'react'
-import TodoContainer from '@containers/TodoContainer'
-import UserContainer from './UserContainer'
+import React, { useState, useEffect, FC } from 'react'
+import CounterContainer from './CounterContainer'
+import withLoading from '@components/hoc/withLoading'
 
-const App = () => {
+interface iProps {
+  name?: string | 'App Name'
+}
+const App: FC<iProps> = () => {
   const [width, setWidth] = useState(window.innerWidth)
 
   useEffect(() => {
@@ -15,12 +18,10 @@ const App = () => {
 
   return (
     <div className='container'>
-      <UserContainer />
       <h2>Hooks</h2>
-      <p>initial width: {width}px</p>
-      <TodoContainer name='TodoContainer' />
+      <p>description...</p>
     </div>
   )
 }
 
-export default App
+export default withLoading(App)

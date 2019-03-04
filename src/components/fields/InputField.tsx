@@ -1,10 +1,12 @@
-import React, { SFC, FormEvent, ChangeEvent, useRef, useEffect, useDebugValue } from 'react'
+import React, { SFC, FormEvent, ChangeEvent, useRef, useEffect } from 'react'
 
 type E = FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
 
 interface iOwnProps {
   onChange(e: E): void
   value: string
+  placeholder?: string | 'placeholder'
+  type?: string | 'text'
 }
 
 /**
@@ -15,14 +17,15 @@ interface iOwnProps {
  * 3.@useDebugValue
  **/
 
-const InputField: SFC<iOwnProps> = ({ onChange, value }) => {
+const InputField: SFC<iOwnProps> = ({ onChange, value, placeholder, type }) => {
   const inputEl = useRef(null)
   useEffect(() => {
     inputEl.current.focus()
   })
 
-  useDebugValue(inputEl.current.focus() ? 'focused' : 'not focused')
-  return <input onChange={onChange} value={value} ref={inputEl} />
+  return (
+    <input onChange={onChange} value={value} ref={inputEl} type={type} placeholder={placeholder} />
+  )
 }
 
 export default InputField

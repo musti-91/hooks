@@ -1,5 +1,5 @@
-import React, { SFC, useState, ChangeEvent, FormEvent, useRef, useEffect } from 'react'
-
+import React, { SFC, useState, ChangeEvent, FormEvent } from 'react'
+import InputField from './InputField'
 interface iOwnProps {
   onGetValue(val: string): void
 }
@@ -12,7 +12,6 @@ type E = FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
 
 const Form: SFC<iOwnProps> = ({ onGetValue }) => {
   const [val, setVal] = useState<string>('')
-  const inputRef = useRef<HTMLInputElement>(null)
 
   const getValue = (e: E) => {
     e.preventDefault()
@@ -22,14 +21,9 @@ const Form: SFC<iOwnProps> = ({ onGetValue }) => {
     }
   }
 
-  useEffect(() => {
-    inputRef.current.focus()
-  })
-
   return (
     <form onSubmit={getValue} className='form-field'>
-      <input
-        ref={inputRef}
+      <InputField
         onChange={(value: E) => setVal(value.currentTarget.value)}
         value={val}
         placeholder='Describe your todo here ....'
