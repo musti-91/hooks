@@ -1,4 +1,4 @@
-import React, { SFC, useState, ChangeEvent, FormEvent } from 'react'
+import React, { SFC, useState, ChangeEvent, FormEvent, useRef, useEffect } from 'react'
 
 interface iOwnProps {
   onGetValue(val: string): void
@@ -7,11 +7,12 @@ interface iOwnProps {
 type E = FormEvent<HTMLFormElement> | ChangeEvent<HTMLInputElement>
 /**
  * @author
- * @function @AddTodo
+ * @function @Form
  **/
 
-const AddTodo: SFC<iOwnProps> = ({ onGetValue }) => {
+const Form: SFC<iOwnProps> = ({ onGetValue }) => {
   const [val, setVal] = useState<string>('')
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const getValue = (e: E) => {
     e.preventDefault()
@@ -21,9 +22,14 @@ const AddTodo: SFC<iOwnProps> = ({ onGetValue }) => {
     }
   }
 
+  useEffect(() => {
+    inputRef.current.focus()
+  })
+
   return (
     <form onSubmit={getValue} className='form-field'>
       <input
+        ref={inputRef}
         onChange={(value: E) => setVal(value.currentTarget.value)}
         value={val}
         placeholder='Describe your todo here ....'
@@ -32,4 +38,4 @@ const AddTodo: SFC<iOwnProps> = ({ onGetValue }) => {
   )
 }
 
-export default AddTodo
+export default Form

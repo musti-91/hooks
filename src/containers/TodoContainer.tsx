@@ -7,7 +7,7 @@ import fetchData from '@utils/fetchData'
 import iTodo from '@models/iTodo'
 import iUser from '@models/iUser'
 // components
-import AddTodo from '@components/AddTodo'
+import Form from '@components/Form'
 import ListItem from '@components/ListItem'
 import { getNotified } from '@utils/notifications'
 
@@ -70,7 +70,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   return (
     <div className='todo-container'>
       <h2>{name}</h2>
-      <AddTodo onGetValue={addTodo} />
+      <Form onGetValue={addTodo} />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
         {todos.length !== 0 && <h2>Total: {todos.length}</h2>}

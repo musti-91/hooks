@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { shallow, mount } from 'enzyme'
 import TodoContainer from '@containers/TodoContainer'
-import AddTodo from '@components/AddTodo'
+import Form from '@components/Form'
 import ListItem from '@components/ListItem'
 
 describe('TodoContainer', () => {
@@ -15,9 +15,9 @@ describe('TodoContainer', () => {
     expect(wrapper.isEmptyRender()).toBeFalsy()
   })
 
-  it(`should render 'AddTodo' without crashing`, () => {
-    const shall = shallow(<AddTodo onGetValue={handleFn} />)
-    mount(<AddTodo onGetValue={() => {}} />)
+  it(`should render 'Form' without crashing`, () => {
+    const shall = shallow(<Form onGetValue={handleFn} />)
+    mount(<Form onGetValue={() => {}} />)
   })
 
   it(`should have 'ul' element, with it's class `, () => {

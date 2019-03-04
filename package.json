@@ -145,9 +145,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "husky": {
-    "precommit": "npm run test",
-    "prepush": "npm run test"
   }
 }
