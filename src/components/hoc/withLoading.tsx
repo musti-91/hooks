@@ -10,7 +10,7 @@ const withLoading = <P extends object>(Component: ComponentType<P>): FC<P & iPro
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     const handleLoading = () => setLoading(false)
-    setTimeout(handleLoading, 1500)
+    setTimeout(handleLoading, 500)
   }, [])
   return loading ? (
     <div className='spinner'>
