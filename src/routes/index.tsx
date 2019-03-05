@@ -4,7 +4,6 @@ import { Router, Switch, Route } from 'react-router-dom'
 import routes from './routes'
 import history from '@utils/history'
 import withLoading from '@components/hoc/withLoading'
-import CounterContainer from '@containers/CounterContainer'
 
 /**
  * @author
@@ -13,13 +12,15 @@ import CounterContainer from '@containers/CounterContainer'
 
 const RouteHook: SFC<any> = props => {
   return (
-    <Router history={history}>
-      <Switch>
-        {Object.keys(routes).map(route => (
-          <Route {...routes[route]} key={routes[route].sequence} />
-        ))}
-      </Switch>
-    </Router>
+    <div className='container'>
+      <Router history={history}>
+        <Switch>
+          {Object.keys(routes).map(route => (
+            <Route {...routes[route]} key={routes[route].sequence} />
+          ))}
+        </Switch>
+      </Router>
+    </div>
   )
 }
 

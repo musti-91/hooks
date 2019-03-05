@@ -1,8 +1,9 @@
-import React, { SFC } from 'react'
+import React, { SFC, MouseEvent } from 'react'
 
-type E = HTMLButtonElement
+type E = MouseEvent<HTMLButtonElement>
 interface iOwnProps {
   title: string
+  bgColor?: string | 'lightcoral'
   onButtonClick: (e: E) => void
 }
 
@@ -11,8 +12,12 @@ interface iOwnProps {
  * @function @ButtonField
  **/
 
-const ButtonField: SFC<iOwnProps> = ({ title, onButtonClick }) => {
-  return <button onClick={() => onButtonClick}>{title}</button>
+const ButtonField: SFC<iOwnProps> = ({ title, onButtonClick, bgColor }) => {
+  return (
+    <button onClick={onButtonClick} className='btn-field' style={{ backgroundColor: bgColor }}>
+      {title}
+    </button>
+  )
 }
 
 export default ButtonField

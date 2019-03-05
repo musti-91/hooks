@@ -1,5 +1,5 @@
 import React, { useState, useEffect, FC } from 'react'
-import CounterContainer from './CounterContainer'
+import { Link } from 'react-router-dom'
 import withLoading from '@components/hoc/withLoading'
 
 interface iProps {
@@ -17,10 +17,22 @@ const App: FC<iProps> = () => {
   })
 
   return (
-    <div className='container'>
+    <>
       <h2>Hooks</h2>
-      <p>description...</p>
-    </div>
+      <h3>width: {width}px</h3>
+      <p>Getting the width of window is the simple example of hooks</p>
+      <div className='nav'>
+        <Link to='/todos' className='link'>
+          Todos
+        </Link>
+        <Link to='/users' className='link'>
+          Users
+        </Link>
+        <Link to='/count' className='link'>
+          Counter
+        </Link>
+      </div>
+    </>
   )
 }
 

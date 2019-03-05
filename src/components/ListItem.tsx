@@ -1,5 +1,6 @@
 import React, { SFC } from 'react'
 import { useSpring, animated } from 'react-spring'
+import ButtonField from '@components/fields/ButtonField'
 interface iOwnProps {
   key: any
   item: any
@@ -43,7 +44,7 @@ const ListItem: SFC<iOwnProps> = ({ onChecked, error, item, onDelete, onUserIdCl
           </animated.div>
         )}
       </div>
-      <button onClick={() => onDelete(item.id)}>X</button>
+      <ButtonField onButtonClick={() => onDelete(item.id)} title='X' />
     </animated.div>
   )
 }

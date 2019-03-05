@@ -1,5 +1,6 @@
 import React, { SFC, useState, useEffect } from 'react'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 // helpers
 import { log } from '@utils/log'
 import fetchData from '@utils/fetchData'
@@ -8,7 +9,7 @@ import iTodo from '@models/iTodo'
 import iUser from '@models/iUser'
 // components
 import Form from '@components/fields/Form'
-import ListItem from '@components/ListItem'
+import List from '@components/List'
 import { getNotified } from '@utils/notifications'
 
 interface iOwnProps {
@@ -79,22 +80,21 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
   }
   return (
     <div className='todo-container'>
+      <Link to='/' className='link'>
+        back
+      </Link>
       <h2>{name}</h2>
       <Form onGetValue={addTodo} />
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
         {renderHeader()}
-        {todos.length !== 0 &&
-          todos.map((todo: iTodo) => (
-            <ListItem
-              item={todo}
-              onDelete={removeTodo}
-              onChecked={setTodoCheck}
-              key={todo.id}
-              onUserIdClick={setUserId}
-              user={user}
-            />
-          ))}
+        <List
+          list={todos}
+          onChecked={setTodoCheck}
+          onDelete={removeTodo}
+          onUserIdClick={setUserId}
+          more={{ user }}
+        />
       </ul>
     </div>
   )

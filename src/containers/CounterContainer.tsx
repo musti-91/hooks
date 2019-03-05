@@ -1,8 +1,9 @@
-import React, { FC, useReducer, MouseEvent, useEffect, SFC } from 'react'
-import { userReducer, INITIAL_STATE, Store } from '@stores/index'
+import React, { FC, useState, MouseEvent, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import withProvider from '@components/hoc/withProvider'
 
 import TextField from '@components/fields/TextField'
-import withLoading from '@components/hoc/withLoading'
+import ButtonField from '@components/fields/ButtonField'
 
 type E = MouseEvent<HTMLButtonElement>
 
@@ -13,29 +14,30 @@ interface iOwnProps {}
  * @function @CounterContainer
  **/
 
-const CounterContainer: SFC<iOwnProps> = props => {
-  // const [state, dispatch] = useReducer(userReducer, INITIAL_STATE)
+const CounterContainer: FC<iOwnProps> = props => {
+  const [count, setCount] = useState<number>(0)
 
-  // useEffect(() => {
-  //   let data = JSON.parse(localStorage.getItem('count'))
-  //   dispatch({ type: 'RESET', count: data.count })
-  // }, [])
+  useEffect(() => {
+    let data = JSON.parse(localStorage.getItem('count'))
+    setCount(data)
+  }, [])
 
-  // useEffect(() => {
-  //   localStorage.setItem('count', JSON.stringify(state))
-  // }, [state])
+  useEffect(() => {
+    localStorage.setItem('count', JSON.stringify(count))
+  }, [count])
 
   return (
-    // <Store.Provider value={state}>
-    //   <>
-    //     <TextField title='Counter: ' />
-    //     <button onClick={(e: E) => dispatch({ type: 'INC' })}>+</button>
-    //     <button onClick={(e: E) => dispatch({ type: 'DEC' })}>-</button>
-    //     <button onClick={(e: E) => dispatch({ type: 'RESET' })}>*</button>
-    //   </>
-    // </Store.Provider>
-    <div>loading...</div>
+    <>
+      <Link to='/' className='link'>
+        back
+      </Link>
+      <TextField title={`count: ${count}`} />
+      <div className='nav'>
+        <ButtonField onButtonClick={(e: E) => setCount(count + 1)} title='+' />
+        <ButtonField onButtonClick={(e: E) => setCount(count - 1)} title='-' />
+        <ButtonField onButtonClick={(e: E) => setCount(0)} title='*' />
+      </div>
+    </>
   )
 }
-
 export default CounterContainer
