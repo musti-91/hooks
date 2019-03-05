@@ -27,7 +27,6 @@ describe('TodoContainer', () => {
 
   it(`should render 'ListItem' without crashing`, () => {
     const item = { id: '1', subject: 'something', complete: true }
-    const shall = shallow(<ListItem onChecked={handleFn} onDelete={handleFn} key={1} item={item} />)
     mount(<ListItem onChecked={() => {}} onDelete={() => {}} key={'1'} item={item} />)
   })
 

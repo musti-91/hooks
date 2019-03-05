@@ -40,24 +40,24 @@ const reducer = (state: iUserState, action: ActionType) => {
   }
 }
 
-// interface iContextType {
-//   state: iUserState
-//   dispatch: Dispatch<ActionType>
-// }
+interface iContextType {
+  state: iUserState
+  dispatch: Dispatch<ActionType>
+}
 
-// const logger = (prev: iContextType, next: iContextType) => {
-//   let timesOfChanges: number = 0
-//   console.log(`%c> prevState: @${new Date().toLocaleTimeString()}`, 'color: #016BB7;')
-//   console.log(prev.state)
-//   console.count('changes')
-//   console.log(`%c> next State: @${new Date().toLocaleTimeString()}`, 'color: #016BB7;')
-//   console.log(next.state)
-//   return timesOfChanges
-// }
+const logger = (prev: iContextType, next: iContextType) => {
+  let timesOfChanges: number = 0
+  console.log(`%c> prevState: @${new Date().toLocaleTimeString()}`, 'color: #016BB7;')
+  console.log(prev.state)
+  console.count('changes')
+  console.log(`%c> next State: @${new Date().toLocaleTimeString()}`, 'color: #016BB7;')
+  console.log(next.state)
+  return timesOfChanges
+}
 
 function createStore() {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE)
-  const Store = createContext({ state, dispatch })
+  const Store = createContext({ state, dispatch }, logger)
   return { Store, state, dispatch }
 }
 

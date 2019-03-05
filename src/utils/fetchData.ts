@@ -8,13 +8,13 @@ const fetchData = async (type: string, id?: string | number) => {
       req = await fetch(`http://jsonplaceholder.typicode.com/users`)
       break
     case 'todo':
-      req = await fetch(`http://jsonplaceholder.typicode.com/todo/${id}`)
+      req = await fetch(`http://jsonplaceholder.typicode.com/todos/${id}`)
       break
     case 'todos':
       req = await fetch(`http://jsonplaceholder.typicode.com/todos`)
       break
     default:
-      req = await fetch('')
+      req = await fetch(type)
   }
   return req.json()
 }

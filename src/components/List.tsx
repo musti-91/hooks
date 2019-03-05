@@ -7,7 +7,7 @@ interface iOwnProps {
   onDelete(id: string): void
   onChecked(id: string): void
   onUserIdClick(id: string): void
-  more: any
+  more?: any
 }
 
 /**
