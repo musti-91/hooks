@@ -1,5 +1,6 @@
 import React, { SFC } from 'react'
 import gql from 'graphql-tag'
+import { Link } from 'react-router-dom'
 
 import { Query } from 'react-apollo'
 import withLoading from '@components/hoc/withLoading'
@@ -26,6 +27,9 @@ const ReposContainer: SFC<iOwnProps> = props => {
   }
   return (
     <div>
+      <Link to='/' className='link'>
+        back
+      </Link>
       <h2>Repo's: </h2>
       <p>Using graphql and github for fetching all repo's</p>
       <Query query={REPOS_QUERY} variables={{}}>

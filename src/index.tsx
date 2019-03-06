@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import '@assets/index.scss'
+import 'react-toastify/dist/ReactToastify.css'
 import RouteHook from '@routes/index'
 
 import * as serviceWorker from './serviceWorker'

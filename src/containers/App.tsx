@@ -1,7 +1,7 @@
 import React, { useState, useEffect, FC } from 'react'
 import { Link } from 'react-router-dom'
 import withLoading from '@components/hoc/withLoading'
-
+import mainImage from '@assets/main.png'
 interface iProps {
   name?: string | 'App Name'
 }
@@ -17,9 +17,8 @@ const App: FC<iProps> = () => {
   })
 
   return (
-    <>
+    <div className='app'>
       <h2>Hooks</h2>
-      <h3>width: {width}px</h3>
       <p>Getting the width of window is the simple example of hooks</p>
       <div className='nav'>
         <Link to='/todos' className='link'>
@@ -35,7 +34,8 @@ const App: FC<iProps> = () => {
           Repositories
         </Link>
       </div>
-    </>
+      <img src={mainImage} alt='main-image' className='main-image' />
+    </div>
   )
 }
 

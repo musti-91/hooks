@@ -1,5 +1,6 @@
 import React, { SFC, useState, useEffect } from 'react'
 import _ from 'lodash'
+import { ToastContainer, toast } from 'react-toastify'
 import { Link } from 'react-router-dom'
 // helpers
 import { log } from '@utils/log'
@@ -38,6 +39,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
 
     let copyTodos = [newTodo, ...todos]
     setTodos(copyTodos)
+    toast.success('new todos has been added!')
     log(`add Todo: ${newTodo.id}`)
   }
   // Check
@@ -88,14 +90,9 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
         {renderHeader()}
-        <List
-          list={todos}
-          onChecked={setTodoCheck}
-          onDelete={removeTodo}
-          onUserIdClick={setUserId}
-          more={{ user }}
-        />
+        <List list={todos} onChecked={setTodoCheck} onDelete={removeTodo} onUserIdClick={setUserId} more={{ user }} />
       </ul>
+      <ToastContainer autoClose={1800} />
     </div>
   )
 }

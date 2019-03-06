@@ -11,7 +11,7 @@ ul li {
 }
 .container {
   max-width: 800px;
-  width: 700px;
+  width: 800px;
   margin: 0 auto;
   margin-top: 20px;
   display: flex;
@@ -150,4 +150,15 @@ a  {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.app {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  .main-image  {
+    display: block;
+    width: 500px;
+    height: auto;
+  }
 }
