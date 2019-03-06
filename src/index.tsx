@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import '@assets/index.scss'
-
 import RouteHook from '@routes/index'
 
 import * as serviceWorker from './serviceWorker'

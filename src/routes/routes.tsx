@@ -4,6 +4,7 @@ import App from '@containers/App'
 import TodoContainer from '@containers/TodoContainer'
 import CounterContainer from '@containers/CounterContainer'
 import UserContainer from '@containers/UserContainer'
+import ReposContainer from '@containers/ReposContainer'
 
 interface RouteDefinition {
   sequence: number
@@ -40,6 +41,12 @@ const routes: iRoute = {
     path: '/count',
     exact: true,
     component: CounterContainer
+  },
+  repos: {
+    sequence: 5,
+    path: '/repos',
+    exact: true,
+    component: ReposContainer
   }
 }
 

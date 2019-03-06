@@ -2,7 +2,13 @@ body {
   margin: 0;
   padding: 0;
 }
-
+a {
+  text-decoration: none;
+  color: lightcoral;
+}
+ul li {
+  list-style-type: hiragana;
+}
 .container {
   max-width: 800px;
   width: 700px;
