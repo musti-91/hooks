@@ -31,6 +31,9 @@ const App: FC<iProps> = () => {
         <Link to='/count' className='link'>
           Counter
         </Link>
+        <Link to='/repos' className='link'>
+          Repositories
+        </Link>
       </div>
     </>
   )
