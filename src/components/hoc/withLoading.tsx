@@ -5,7 +5,9 @@ interface iProps {
   time?: number | 750
 }
 
-const withLoading = <P extends object>(Component: ComponentType<P>): FC<P & iProps> => ({ ...props }: iProps | {}) => {
+const withLoading = <P extends object>(Component: ComponentType<P>): FC<P & iProps> => ({
+  ...props
+}: iProps | {}) => {
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     const handleLoading = () => setLoading(false)

@@ -2,11 +2,14 @@ import React, { useState, useEffect, FC } from 'react'
 import { Link } from 'react-router-dom'
 import withLoading from '@components/hoc/withLoading'
 import mainImage from '@assets/main.png'
+import ThemeContainer from './Theme/index'
+import Provider from '@containers/Theme/Provider'
 interface iProps {
   name?: string | 'App Name'
 }
 const App: FC<iProps> = () => {
   const [width, setWidth] = useState(window.innerWidth)
+  const [theme, setTheme] = useState({ backgroundColor: 'red', color: 'white' })
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth)
@@ -18,6 +21,9 @@ const App: FC<iProps> = () => {
 
   return (
     <div className='app'>
+      <Provider theme={theme} setTheme={setTheme}>
+        <ThemeContainer />
+      </Provider>
       <h2>Hooks</h2>
       <p>Getting the width of window is the simple example of hooks</p>
       <div className='nav'>

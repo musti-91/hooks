@@ -7,7 +7,7 @@ import UserContainer from '@containers/UserContainer'
 import ReposContainer from '@containers/ReposContainer'
 import RoomStore from '@containers/RoomStore'
 import RoomStoreFunction from '@containers/RoomStoreFunction'
-
+import ThemeContainer from '@containers/Theme'
 interface RouteDefinition {
   sequence: number
   exact: boolean
