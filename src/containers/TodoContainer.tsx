@@ -107,13 +107,9 @@ function useFetchData<S>(type: string) {
   const [fetchError, setFetchTodoError] = useState(null)
 
   useEffect(() => {
-    fetchData(type).then(res => setArr(res))
-  }, [])
-
-  useEffect(() => {
-    fetchData('todos')
-      .then(todos => setArr(_.shuffle(todos)))
-      .catch(err => setFetchTodoError(err))
+    fetchData(type)
+      .then(res => setArr(res))
+      .catch(error => setFetchTodoError(error))
   }, [])
 
   switch (type) {

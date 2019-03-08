@@ -5,6 +5,8 @@ import TodoContainer from '@containers/TodoContainer'
 import CounterContainer from '@containers/CounterContainer'
 import UserContainer from '@containers/UserContainer'
 import ReposContainer from '@containers/ReposContainer'
+import RoomStore from '@containers/RoomStore'
+import RoomStoreFunction from '@containers/RoomStoreFunction'
 
 interface RouteDefinition {
   sequence: number
@@ -47,6 +49,18 @@ const routes: iRoute = {
     path: '/repos',
     exact: true,
     component: ReposContainer
+  },
+  room: {
+    sequence: 6,
+    path: '/room',
+    exact: true,
+    component: RoomStore
+  },
+  roomFunction: {
+    sequence: 7,
+    path: '/roomFunction',
+    exact: true,
+    component: RoomStoreFunction
   }
 }
 

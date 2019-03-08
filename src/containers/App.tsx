@@ -33,6 +33,9 @@ const App: FC<iProps> = () => {
         <Link to='/repos' className='link'>
           Repositories
         </Link>
+        <Link to='/room' className='link'>
+          Room
+        </Link>
       </div>
       <img src={mainImage} alt='main-image' className='main-image' />
     </div>
