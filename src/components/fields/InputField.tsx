@@ -18,7 +18,8 @@ interface iOwnProps {
  **/
 
 const InputField: SFC<iOwnProps> = ({ onChange, value, placeholder, type }) => {
-  const inputEl = useRef(null)
+  const inputEl = useRef<HTMLInputElement>(null)
+
   useEffect(() => {
     inputEl.current.focus()
   })

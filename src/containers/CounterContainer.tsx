@@ -18,8 +18,8 @@ const CounterContainer: FC<iOwnProps> = props => {
 
   useEffect(() => {
     let data = JSON.parse(localStorage.getItem('count'))
-    setCount(data)
-  }, [])
+    setCount(previousCount => previousCount + data)
+  }, []) // this called DEPS
 
   useEffect(() => {
     localStorage.setItem('count', JSON.stringify(count))

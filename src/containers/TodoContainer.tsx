@@ -90,7 +90,13 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
       {fetchError && <p style={{ color: 'red' }}>{fetchError}</p>}
       <ul className='list'>
         {renderHeader()}
-        <List list={todos} onChecked={setTodoCheck} onDelete={removeTodo} onUserIdClick={setUserId} more={{ user }} />
+        <List
+          list={todos}
+          onChecked={setTodoCheck}
+          onDelete={removeTodo}
+          onUserIdClick={setUserId}
+          more={{ user }}
+        />
       </ul>
       <ToastContainer autoClose={1800} />
     </div>
@@ -101,6 +107,7 @@ const TodoContainer: SFC<iOwnProps> = ({ name }) => {
  * @type custom hooks
  * @param type string
  * @return type object {[], setArray()}
+ * ❗️return an empty array for useEffectfunction will have bas consequences,reason: https://bit.ly/2EOEwk8
  */
 function useFetchData<S>(type: string) {
   const [arr, setArr] = useState<any[]>([])
